@@ -326,6 +326,7 @@ input#sh-but{
   padding: 0px;
   background-color: #fefefe;
   border-radius: 5px;
+  overflow-x: scroll;
   margin-left: -5px
 }
 #top li{
@@ -340,9 +341,7 @@ input#sh-but{
   padding: 13px 15px;
   /*background-color: #f1f4f9;*/
 }
-#top li:first-child a{
-  background-color: #f1f4f9;
-}
+
 #top img{
   border-radius: 10px;
   width: 64px;
@@ -358,7 +357,6 @@ input#sh-but{
   font-size: 15px;
 }
 #two{
-  height: 43px;
 }
 #two a{
   background-color: #818181;
@@ -368,10 +366,7 @@ input#sh-but{
   padding: 5px 13px 4px 13px;
   width: 115px;
   line-height: 1;
-  margin-right: 20px;
-  /*transition: all ease-in-out 1s;*/
-  /*float: left;*/
-  /*margin-top: 9px;*/
+  margin:5px 15px 5px 0;
 }
 #two a:hover{
   text-decoration: none;
@@ -452,7 +447,20 @@ footer#footer{
   padding-top: 18px;
   margin-top: 30px;
 }
+@media only screen and (max-width:769px) {
+    body{
+      padding: 0 15px;
+    }
+    #top{
+      padding-right: 0;
+    }
+    .zxy{
+      width: auto;
+    }
+}
 @media only screen and (min-width:481px) {
+
 }
 @media only screen and (min-width:769px) {
+
 }
