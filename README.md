@@ -1,4 +1,3 @@
 # logacg.com
 
-change and test fetch sixth
-change online 2
+change and test fetch 7
