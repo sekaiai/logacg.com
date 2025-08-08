@@ -1,0 +1,179 @@
+/* 变量定义 */
+html {
+  --main-color: #fff;
+  --font-size-hitokoto: 40px;
+  --font-size-from-who: 28px;
+}
+
+/* 基础样式 */
+body {
+  height: 100vh;
+  margin: 0;
+  background-image: url(../dist/73575222_p0.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 布局组件 */
+.box {
+  padding-top: 15vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.copyright {
+  position: fixed;
+  bottom: 2px;
+  text-align: center;
+  font-size: 14px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* 文本样式 */
+.hitokoto {
+  font-family: serif;
+  text-align: center;
+  font-size: var(--font-size-hitokoto);
+  max-width: 800px;
+  padding: 0 12px;
+  line-height: initial;
+}
+
+.from_who {
+  font-family: serif;
+  text-align: center;
+  font-size: var(--font-size-from-who);
+  padding: 0 10px;
+  line-height: initial;
+}
+
+/* 功能组件 */
+.sakura {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  z-index: 10000;
+}
+
+.text_cover {
+  border-radius: 2px;
+}
+
+.more {
+  width: 1em;
+  height: 1em;
+  padding: 3px;
+  cursor: pointer;
+  line-height: 1;
+  box-sizing: content-box;
+}
+
+/* 版权信息样式 */
+.copyright img {
+  width: 14px;
+  display: block;
+}
+
+.copyright span {
+  display: inline-block;
+  border-right: 1px solid #333;
+  height: 14px;
+}
+
+/* 动画定义 */
+@keyframes fall {
+  0% { opacity: 0.9; top: 0; }
+  100% { opacity: 0.2; top: 100%; }
+}
+
+@keyframes blow-soft-left {
+  0% { margin-left: 0; }
+  100% { margin-left: -50%; }
+}
+
+@keyframes blow-medium-left {
+  0% { margin-left: 0; }
+  100% { margin-left: -100%; }
+}
+
+@keyframes blow-soft-right {
+  0% { margin-left: 0; }
+  100% { margin-left: 50%; }
+}
+
+@keyframes blow-medium-right {
+  0% { margin-left: 0; }
+  100% { margin-left: 100%; }
+}
+
+@keyframes sway-0 {
+  0% { transform: rotate(-5deg); }
+  40% { transform: rotate(28deg); }
+  100% { transform: rotate(3deg); }
+}
+
+@keyframes sway-1 {
+  0% { transform: rotate(10deg); }
+  40% { transform: rotate(43deg); }
+  100% { transform: rotate(15deg); }
+}
+
+@keyframes sway-2 {
+  0% { transform: rotate(15deg); }
+  40% { transform: rotate(56deg); }
+  100% { transform: rotate(22deg); }
+}
+
+@keyframes sway-3 {
+  0% { transform: rotate(25deg); }
+  40% { transform: rotate(74deg); }
+  100% { transform: rotate(37deg); }
+}
+
+@keyframes sway-4 {
+  0% { transform: rotate(40deg); }
+  40% { transform: rotate(68deg); }
+  100% { transform: rotate(25deg); }
+}
+
+@keyframes sway-5 {
+  0% { transform: rotate(50deg); }
+  40% { transform: rotate(78deg); }
+  100% { transform: rotate(40deg); }
+}
+
+@keyframes sway-6 {
+  0% { transform: rotate(65deg); }
+  40% { transform: rotate(92deg); }
+  100% { transform: rotate(58deg); }
+}
+
+@keyframes sway-7 {
+  0% { transform: rotate(72deg); }
+  40% { transform: rotate(118deg); }
+  100% { transform: rotate(68deg); }
+}
+
+@keyframes sway-8 {
+  0% { transform: rotate(94deg); }
+  40% { transform: rotate(136deg); }
+  100% { transform: rotate(82deg); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 状态样式 */
+.loading {
+  animation: spin .3s ease infinite;
+}

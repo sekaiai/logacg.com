@@ -1,87 +1,92 @@
-<!doctype html>
-
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>记录地平线之境界的彼方 - logacg.com</title>
-    <link href="dist/jquery-sakura.min.css" rel="stylesheet" type="text/css">
-    <style type="text/css">
-    html {
-        height: 100%;
-    }
-
-    body {
-        background: #fff;
-    }
-
-    h1 {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        z-index: 9;
-        color: #fff;
-    }
-
-    .box {
-        background-size: cover;
-        color: #fff;
-        background-image: url(dist/73575222_p0.jpg);
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .video-box {
-        border-radius: 5px;
-        min-width: 800px;
-        min-height: 400px;
-        background-color: rgba(255, 255, 255, .3);
-        position: relative;
-        transform: translateY(-15%);
-    }
-
-    .video-box:after {
-    	content: '';
-        position: absolute;
-        width:120px;
-        height: 120px;
-        left: 50%;
-        top: 50%;
-        transform: translate(-60px, -60px);
-        cursor: pointer;
-        background-size: contain;
-        background-repeat: no-repeat;
-        /*background-image: url(dist/play-button.svg);*/
-    }
-
-    video {
-    	position: relative;
-    	z-index: 9;
-        width: 800px;
-        display: block;
-        outline: none;
-        opacity: 0;
-        transition: opacity .3s ease-in;
-    }
-    </style>
+    <link href="dist/style.css" rel="stylesheet" type="text/css">
 </head>
-
 <body>
-    <h1>LOGACG.COM</h1>
     <div class="box">
-        <div class="video-box"></div>
+        <div class="text_cover hitokoto">一言</div>
+        <div class="text_cover from_who"></div>
+        <div class="text_cover more" title="再来一句">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+                <path fill="currentColor" d="M784.512 230.272v-50.56a32 32 0 1 1 64 0v149.056a32 32 0 0 1-32 32H667.52a32 32 0 1 1 0-64h92.992A320 320 0 1 0 524.8 833.152a320 320 0 0 0 320-320h64a384 384 0 0 1-384 384 384 384 0 0 1-384-384 384 384 0 0 1 643.712-282.88z"></path>
+            </svg>
+        </div>
     </div>
-    <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
-    <script src="dist/jquery-sakura.min.js"></script>
+
+    <div class="copyright">
+        <a href="https://logacg.com">记录境界线上的地平线</a>
+        <span></span>
+        <a href="https://sekaiai.github.io/" rel="noopener noreferrer" target="_blank">GITHUB</a>
+        <span></span>
+        <a target="_blank" rel="noopener noreferrer" href="https://beian.miit.gov.cn">蜀ICP备2022012373号-1</a>
+        <span></span>
+        <a rel="noopener noreferrer" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51015602000388">川公网安备51015602000388号</a>
+    </div>
+
+    <script src="dist/main.js"></script>
     <script>
-    $(window).load(function() {
-        $('body').sakura();
-    });
+        const hitokotoElement = document.querySelector('.hitokoto');
+        const sourceElement = document.querySelector('.from_who');
+        const refreshButton = document.querySelector('.more');
+        const refreshIcon = refreshButton.querySelector('svg');
+        
+        let isLoading = false;
+        let refreshTimer = null;
+        const REFRESH_INTERVAL = 30 * 1000; // 30秒刷新一次
+        
+        refreshButton.addEventListener('click', fetchHitokoto);
+        
+
+        function setupAutoRefresh() {
+            clearTimeout(refreshTimer);
+            refreshTimer = setTimeout(fetchHitokoto, REFRESH_INTERVAL);
+        }
+
+        async function fetchHitokoto() {
+            if (isLoading) return;
+            
+            try {
+                isLoading = true;
+                refreshIcon.classList.add('loading');
+                clearTimeout(refreshTimer);
+                
+                const response = await fetch('https://hi.logacg.com');
+                if (!response.ok) {
+                    throw new Error(`HTTP错误: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data && data.hitokoto) {
+                    hitokotoElement.textContent = data.hitokoto;
+                    
+                    let sourceText = '';
+                    if (data.from_who) {
+                        sourceText += `—— ${data.from_who}`;
+                    }
+                    if (data.from && data.from !== '原创') {
+                        sourceText += `「${data.from}」`;
+                    }
+                    sourceElement.textContent = sourceText;
+                }
+                
+                setupAutoRefresh();
+                
+            } catch (error) {
+                console.error('获取一言失败:', error);
+                setupAutoRefresh();
+            } finally {
+                isLoading = false;
+                refreshIcon.classList.remove('loading');
+            }
+        }
+        
+        // 页面加载时获取一次一言
+        fetchHitokoto();
     </script>
 </body>
-
 </html>
